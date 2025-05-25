@@ -20,9 +20,9 @@ public class Ventana extends JFrame implements ActionListener {
     private JMenuItem miAbrir, miCerrar, miAgregar, miModificar;
     private JMenuItem miBuscar, miEliminar, miFinalizar;
     
-    private JLabel etNombre, etEmail, etTelefono;
+    private JLabel etNombre, etEmail, etTelefono, etClaveS;
     private JLabel etRegistro;
-    private JTextField tfNombre, tfEmail, tfTelefono;
+    private JTextField tfNombre, tfEmail, tfTelefono, tfClaveS;
     private JTextField tfRegistro;
     private JButton btIni, btFin, btAtras, btAdelante, btLimpiar;
     private JPanel panelCaptura, panelEti, panelTextField, panelNav;
@@ -36,20 +36,24 @@ public class Ventana extends JFrame implements ActionListener {
         
         etNombre=new JLabel("Cliente"); 
         etEmail=new JLabel("Email"); 
-        etTelefono=new JLabel("Telefono"); 
+        etTelefono=new JLabel("Telefono");
+        etClaveS =new JLabel("Clave de servicio");
         etRegistro=new JLabel ("Registro:");
+        
         tfNombre=new JTextField(30); 
         tfEmail=new JTextField(30);  
         tfTelefono=new JTextField("998",10); 
+        tfClaveS=new JTextField(25);
         tfRegistro=new JTextField(7); tfRegistro.setEnabled(false);
+        
         btIni=new JButton(" << "); btFin=new JButton(" >> "); 
         btAtras=new JButton(" < "); btAdelante=new JButton(" > ");
         btLimpiar=new JButton("Limpiar campos");         
         
         panelCaptura=new JPanel(); panelCaptura.setLayout(new BorderLayout());
         
-        panelEti=new JPanel(); panelEti.setLayout(new GridLayout(3,1));
-        panelTextField=new JPanel(); panelTextField.setLayout(new GridLayout(3,1));
+        panelEti=new JPanel(); panelEti.setLayout(new GridLayout(4,1));
+        panelTextField=new JPanel(); panelTextField.setLayout(new GridLayout(4,1));
         panelNav=new JPanel(); panelNav.setLayout(new FlowLayout());
         
         panelCaptura.setBackground(Color.red);
@@ -59,10 +63,12 @@ public class Ventana extends JFrame implements ActionListener {
         
         panelEti.add(etNombre); 
         panelEti.add(etEmail);
-        panelEti.add(etTelefono); 
+        panelEti.add(etTelefono);
+        panelEti.add(etClaveS);
         panelTextField.add(tfNombre); 
         panelTextField.add(tfEmail);
         panelTextField.add(tfTelefono);
+        panelTextField.add(tfClaveS);
         panelCaptura.add(panelEti, BorderLayout.WEST);
         panelCaptura.add(panelTextField, BorderLayout.CENTER);
         
@@ -146,11 +152,11 @@ public class Ventana extends JFrame implements ActionListener {
             System.exit(0);
             break; 
         case "Agregar":
-            ag = new BaseDeDatos(tfNombre.getText(),Long.parseLong(tfTelefono.getText()), tfEmail.getText());
+            ag = new BaseDeDatos(tfNombre.getText(),Long.parseLong(tfTelefono.getText()), tfEmail.getText(), Integer.parseInt(tfClaveS.getText()));
             accesoRAF.agregar(ag);
             break; 
         case "Modificar":
-            ag = new BaseDeDatos(tfNombre.getText(),Long.parseLong(tfTelefono.getText()), tfEmail.getText());
+            ag = new BaseDeDatos(tfNombre.getText(),Long.parseLong(tfTelefono.getText()), tfEmail.getText(), Integer.parseInt(tfClaveS.getText()));
             accesoRAF.modificar(ag);
             break; 
         case "Eliminar":

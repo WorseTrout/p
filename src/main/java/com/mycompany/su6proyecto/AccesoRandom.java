@@ -42,13 +42,14 @@ public class AccesoRandom {
         }
     }
    
-    public void agregar(BaseDeDatos agenda) {
+    public void agregar(BaseDeDatos bd) {
         try {
-            if (agenda.tamDatos()<=tamMaxReg){
+            if (bd.tamDatos()<=tamMaxReg){
                 raf.seek(totalRegistros * tamMaxReg);
-                raf.writeUTF(agenda.getNombre());
-                raf.writeLong(agenda.getTel());
-                raf.writeUTF(agenda.getEmail());
+                raf.writeUTF(bd.getNombre());
+                raf.writeLong(bd.getTel());
+                raf.writeUTF(bd.getEmail());
+                raf.writeInt(bd.getclaveS());
                 registroActual=totalRegistros;
                 totalRegistros++;
             }
@@ -58,14 +59,15 @@ public class AccesoRandom {
         }
     }
     
-    public void modificar (BaseDeDatos agenda){
+    public void modificar (BaseDeDatos bd){
         if (raf!=null)
         try{
-            if (agenda.tamDatos()<=tamMaxReg){
+            if (bd.tamDatos()<=tamMaxReg){
                 raf.seek(registroActual*tamMaxReg);
-                raf.writeUTF(agenda.getNombre());
-                raf.writeLong(agenda.getTel());
-                raf.writeUTF(agenda.getEmail());
+                raf.writeUTF(bd.getNombre());
+                raf.writeLong(bd.getTel());
+                raf.writeUTF(bd.getEmail());
+                raf.writeInt(bd.getclaveS());
                 JOptionPane.showMessageDialog(null,"Los datos se modificaron en el archivo");
             }
             else JOptionPane.showMessageDialog(null,"El tamaño de los datos excede el maximo permitido!");
@@ -120,7 +122,7 @@ public class AccesoRandom {
                 if(pos>=0 && pos<totalRegistros){
                     raf.seek(tamMaxReg*pos);
                     registroActual=pos;
-                    ag = new BaseDeDatos(raf.readUTF(), raf.readLong(), raf.readUTF());
+                    ag = new BaseDeDatos(raf.readUTF(), raf.readLong(), raf.readUTF(), raf.readInt());
                 }
             } catch (IOException e){
                 System.out.println("Error 5: "+e.toString());
@@ -137,7 +139,7 @@ public class AccesoRandom {
                 for (int i=0; i<totalRegistros; i++){
                     raf.seek(tamMaxReg*i);
                     registroActual=i;
-                    ag = new BaseDeDatos(raf.readUTF(), raf.readLong(), raf.readUTF());
+                    ag = new BaseDeDatos(raf.readUTF(), raf.readLong(), raf.readUTF(), raf.readInt());
                     if (ag.getNombre().equalsIgnoreCase(name)) 
                         {encontrado=true; break;}
                 }
